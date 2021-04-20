@@ -19,7 +19,6 @@ const boll = reactive({
 })
     homepage('/homepage/dragon/ball',{}).then(res =>{
         if(res.data.code == 200){
-            console.log(res.data.data)
             boll.list = res.data.data
         }
     })

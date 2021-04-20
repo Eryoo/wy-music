@@ -17,12 +17,12 @@ const Store = useStore()
 const songInfo = Store.getters['play/getSongInfo']
 const playStatus = Store.getters['play/getPlayStatus']
 const Router = useRouter()
-
+console.log(songInfo)
 function goToPlay (){
     Router.push({
         path:'/play',
         query:{
-            songid:songInfo.al.id
+            songid:songInfo.id
         }
     })
 }

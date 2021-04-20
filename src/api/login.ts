@@ -54,3 +54,8 @@ export const playlistHighqualityTags = (url:string,params:object) => {
 export const topPlaylistHighquality = (url:string,params:object) =>{
     return GET(url,params)
 }
+
+export const personalizedMv = (url:string,params:object) =>{
+    return GET(url,params)
+}
+

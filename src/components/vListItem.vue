@@ -32,7 +32,7 @@ const ar = item.data.ar.map(item => item.name)
 
 
 function getDatailsSong (id) {
-    store.commit("play/setSongUrl","")
+    
     // store.dispatch('play/getSongUrl',id)
     Router.push({
         path:"/play",

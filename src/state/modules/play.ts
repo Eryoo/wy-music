@@ -16,7 +16,8 @@ const getters = {
     getSongurl: (state:any) => state.url,
     getSongInfo:(state:any) => state.songInfo,
     getPlayTimeOut:(state:any) => state.playTimeOut,
-    getPlayStatus:(state:any) => state.playStatus
+    getPlayStatus:(state:any) => state.playStatus,
+    getSongId:(state:any) => state.songId
 }
 
 const actions = {

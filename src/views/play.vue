@@ -3,7 +3,7 @@
          <!-- 隐藏播放器 -->
         <audio id="audio" controls="controls" ref='audio'  style="displat:none" />
         <div class="bg">
-            <img v-if="songs.picUrl != ''" :src="songs.picUrl" alt="">
+            <img class="img" v-if="songs.picUrl != ''" :src="songs.picUrl" alt="">
         </div>
         <div class="plate" :class="{'play':isPlay}">
             <img v-if="songs.picUrl != ''" :src="songs.picUrl" alt="">
@@ -60,13 +60,16 @@
     let timeOut =  computed(() => {
             return  formatSecToDate(((duration.value - currentTime.value)))
         })
+    const selfPlayyStatus = store.getters['play/getPlayStatus']
+    const songPlayId = store.getters['play/getSongId']
+    const songInfo = store.getters['play/getSongInfo']
+    
     function getSongDetails (){
            getSongDetail(`/song/detail?ids=${Route.query.songid}`,{}).then(res =>{
             if(res.data.code == 200){
                 songs.picUrl = res.data.songs[0].al.picUrl
-                console.log(Route.query.songid)
                 store.commit('play/setSongInfo',res.data.songs[0])
-                getSongUrls(Route.query.songid)
+                    getSongUrls(Route.query.songid)
             }
         })
     }
@@ -76,14 +79,6 @@
             console.log(res)
             if(res.data.code == 200) {
                 audio.src = res.data.data[0].url
-                clearInterval(playStatus)
-                playStatus = setInterval(() => {
-                    console.log("audio.readyState",audio.readyState)
-                    if(audio.readyState == 4){
-                        duration.value = audio.duration
-                        clearInterval(playStatus)
-                    }
-                },500)
             }
         })
     }
@@ -111,14 +106,21 @@
     onMounted(() =>{
         //  audio = document.getElementById('audio')
          line = document.getElementById("line")
-         console.log(line.offsetWidth)
-         getSongDetails()
-            clearInterval(playStatus)
-            playStatus = setInterval(() => {
-                if(audio.readyState == 4){
-                   playHandle();
-                }
-            },500)
+         
+            if(!selfPlayyStatus || (songPlayId != Route.query.songid && selfPlayyStatus) ){
+                getSongDetails()
+            }else{
+                console.log(songInfo)
+                songs.picUrl = songInfo.al.picUrl
+                isPlay.value = selfPlayyStatus
+            }
+            
+            audio.addEventListener("canplay", function(){//监听audio是否加载完毕，如果加载完毕
+                 duration.value = audio.duration    
+                 playHandle()           
+                 store.commit("play/setSongUrl","")
+                 store.commit("play/setSongId",Route.query.songid)
+            });            
     })
 
     onUnmounted(() =>{
@@ -128,20 +130,28 @@
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .playContent{
     overflow: hidden;
     position: relative;
-}
-.bg{
-    transform: scale(1.5,1.5);
-    filter: blur(20px);
-    position: absolute;
-    z-index: 2;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, .4);
+    
 }
+    .bg{
+        transform: scale(1.5,1.5);
+        filter: blur(20px);
+        position: absolute;
+        z-index: 2;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: rgba(0, 0, 0, .4); 
+        .img{
+            height: 100%;
+        }
+    }
+
 .plate{
     width: 180px;
     height: 180px;
