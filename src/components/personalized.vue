@@ -18,6 +18,8 @@
     import {ref ,reactive ,computed } from "vue"
     import {personalized} from "../api/login"
     import { useRouter } from "vue-router"
+    import {numberFormat} from "../utils/utils"
+
     const obj = reactive({
         list : []
     })
@@ -30,25 +32,6 @@
                 id:value
             }
         })
-    }
-
-    const numberFormat = (value :number) =>{
-        var param = {
-            value:0,
-            unit:""
-        };
-            var k = 10000,
-                sizes = ['', '万', '亿', '万亿'],
-                i;
-                if(value < k){
-                    param.value =value
-                    param.unit=''
-                }else{
-                    i = Math.floor(Math.log(value) / Math.log(k)); 
-                    param.value = Number(((value / Math.pow(k, i))).toFixed(2));
-                    param.unit = sizes[i];
-                }
-        return param;
     }
 
     personalized("/personalized?limit=6").then(res => {

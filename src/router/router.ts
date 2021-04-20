@@ -34,5 +34,14 @@ const router:Array<any> = [
         },
          component: () =>  import("../views/play.vue")
     },
+    { 
+        path: '/palyList',
+        name:'palyList',
+        meta:{
+            keep:false,
+            nav:false
+        },
+         component: () =>  import("../views/playlistPages.vue")
+    },
 ]
 export default router

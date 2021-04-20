@@ -49,13 +49,8 @@ function toNav (e) {
     })
 }
 
-console.log(Route.path)
-watch(()=> Route.path ,(to,from) => {
-    console.log(to)
-})
-
 </script>
-<style scoped>
+<style scoped lang='scss'>
 .nav{
     width: 100%;
     display: flex;
@@ -69,12 +64,17 @@ watch(()=> Route.path ,(to,from) => {
     height: 50px;
     z-index: 10;
     font-size: 12px;
+    .active{
+        color: red;
+        .icon{
+            filter: saturate(100%);
+        }
+    }
+    .icon {
+        width: 24px;
+        height: 24px;
+        filter: saturate(10%);
+    }
 }
-.active{
-    color: red;
-}
-.icon {
-    width: 24px;
-    height: 24px;
-}
+
 </style>

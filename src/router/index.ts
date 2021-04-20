@@ -10,7 +10,7 @@ import store from "../state/index"
 })
 
 Router.beforeEach((to,from,next) =>{
-    console.log(to)
+
     if(!to.meta.nav){
         store.commit("setNavIsShow",false)
     }else{

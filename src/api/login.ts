@@ -38,3 +38,19 @@ export const getSongUrl = (url:string,params:object) => {
 export const homepageBlockPage = (url:string,params:object) =>{
     return GET(url,params)
 }
+
+export const playlistCatlist = (url:string,params:object) =>{
+    return GET(url,params)
+}
+
+export const relatedPlaylist = (url:string,params:object) => {
+    return GET(url,params)
+}
+
+export const playlistHighqualityTags = (url:string,params:object) => {
+    return GET(url,params)
+}
+
+export const topPlaylistHighquality = (url:string,params:object) =>{
+    return GET(url,params)
+}

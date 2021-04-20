@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="app">
     <router-view></router-view>
     <!-- 底部导航 -->
     <bottomNav></bottomNav>
@@ -24,8 +24,9 @@ export default defineComponent({
 </script>
 
 <style>
+
    #audio{
-     margin-top: -200vh;
+     left: -20000px;
      position: absolute;
    }
 </style>

@@ -7,6 +7,7 @@
             <indexTopNav></indexTopNav>
             <!-- 推荐歌单 -->
             <personalized></personalized>
+            
             <nimiPlay></nimiPlay>
         </div>
     </div>
@@ -18,16 +19,17 @@ import indexBanner from "../components/indexBanner.vue"
 import indexTopNav from "../components/indexTopNav.vue"   
 import nimiPlay from "../components/miniPlay.vue"
 
-import {homepageBlockPage} from "../api/login"
+import {homepageBlockPage,playlistCatlist} from "../api/login"
 
 import {ref , inject} from "vue"
 
-    const demo = inject("audio")
-    console.log("inject")
-    console.log(demo)
+playlistCatlist("/playlist/catlist",{}).then(res =>{
+    console.log(res)
+})
+
 
 homepageBlockPage("/homepage/block/page",{}).then(res =>{
-    console.log(res)
+    // console.log(res)
 })
 
 </script>

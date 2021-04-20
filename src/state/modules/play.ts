@@ -6,13 +6,17 @@ const state = () => {
     return {
         songId:"",
         url:"",
-        songInfo :{}
+        songInfo :{},
+        playStatus:false,//歌曲播放状态
+        playTimeOut:0,//歌曲剩余波峰时间
     }
 }
 
 const getters = {
     getSongurl: (state:any) => state.url,
-    getSongInfo:(state:any) => state.songInfo
+    getSongInfo:(state:any) => state.songInfo,
+    getPlayTimeOut:(state:any) => state.playTimeOut,
+    getPlayStatus:(state:any) => state.playStatus
 }
 
 const actions = {
@@ -35,6 +39,12 @@ const mutations = {
     },
     setSongUrl :(state:any,url:string) =>{
         state.url = url
+    },
+    setPlayTimeOut:(state:any,time:any) =>{
+        state.playTimeOut = time
+    },
+    setPlayStatus: (state:any,status:any)=>{
+        state.playStatus = status
     }
 }
 

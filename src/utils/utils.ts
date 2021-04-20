@@ -21,3 +21,23 @@ export const formatSecToDate = (s) => {
         }
         return t;
 }
+
+
+export const numberFormat =  (value :number) =>{
+    var param = {
+        value:0,
+        unit:""
+    };
+        var k = 10000,
+            sizes = ['', '万', '亿', '万亿'],
+            i;
+            if(value < k){
+                param.value =value
+                param.unit=''
+            }else{
+                i = Math.floor(Math.log(value) / Math.log(k)); 
+                param.value = Number(((value / Math.pow(k, i))).toFixed(2));
+                param.unit = sizes[i];
+            }
+    return param;
+}

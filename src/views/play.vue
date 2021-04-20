@@ -44,7 +44,7 @@
     })
     const store = useStore()
     // 获取全局audio标签
-    const audio = inject("audio")
+    const audio:any = inject("audio")
     const songs = reactive({
         details:{},
         picUrl:""
@@ -65,7 +65,7 @@
             if(res.data.code == 200){
                 songs.picUrl = res.data.songs[0].al.picUrl
                 console.log(Route.query.songid)
-                store.commit('play/setSongInfo',res.data.songs)
+                store.commit('play/setSongInfo',res.data.songs[0])
                 getSongUrls(Route.query.songid)
             }
         })
@@ -90,11 +90,13 @@
     function pausedHanle (){
         isPlay.value = false
         clearInterval(timer)
+        store.commit('play/setPlayStatus',false)
         audio.pause()
     }
     function playHandle() {
         isPlay.value = true
         audio.play()
+        store.commit('play/setPlayStatus',true)
         clearInterval(timer)
           timer = setInterval(() =>{
               if(audio.currentTime == audio.duration){
@@ -102,6 +104,7 @@
               }
             currentTime.value = audio.currentTime;
             pointLeft.value = Number((line.offsetWidth * audio.currentTime)/ audio.duration)
+            store.commit('play/setPlayTimeOut',audio.duration - audio.currentTime)
          },1000)
     }
 
