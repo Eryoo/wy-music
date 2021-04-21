@@ -13,6 +13,7 @@
             <div class="progress">
                 <div class='line' id="line">
                     <div class="point" :style="{left:pointLeft+ 'px'}"></div>
+                    <div class="bufferedLine" :style="{width:bufferedLine + 'px'}"></div>
                 </div>
                 <div class="time">{{timeOut}}</div>
             </div>
@@ -34,6 +35,7 @@
     import { useStore , mapGetters} from "vuex"
     import {getSongDetail ,getSongUrl} from "../api/login"
     import {formatSecToDate} from "../utils/utils"
+    
 
     const Router = useRouter()
     const Route = useRoute()
@@ -57,6 +59,7 @@
     let currentTime:any = ref('')
     let line:any = null
     let pointLeft = ref(0)
+    let bufferedLine = ref(0)
     let timeOut =  computed(() => {
             return  formatSecToDate(((duration.value - currentTime.value)))
         })
@@ -76,7 +79,6 @@
  
     function getSongUrls (id) {
         getSongUrl(`/song/url?id=${id}`,{}).then(res =>{
-            console.log(res)
             if(res.data.code == 200) {
                 audio.src = res.data.data[0].url
             }
@@ -104,7 +106,7 @@
     }
 
     onMounted(() =>{
-        //  audio = document.getElementById('audio')
+            
          line = document.getElementById("line")
          
             if(!selfPlayyStatus || (songPlayId != Route.query.songid && selfPlayyStatus) ){
@@ -116,11 +118,18 @@
             }
             
             audio.addEventListener("canplay", function(){//监听audio是否加载完毕，如果加载完毕
+            console.log('加载完毕')
                  duration.value = audio.duration    
                  playHandle()           
                  store.commit("play/setSongUrl","")
                  store.commit("play/setSongId",Route.query.songid)
             });            
+
+            audio.addEventListener('progress',function(){
+                var z = audio.buffered.end(audio.buffered.length-1);
+                bufferedLine.value = Number((line.offsetWidth * z)/ audio.duration)
+            })
+            
     })
 
     onUnmounted(() =>{
@@ -198,6 +207,13 @@
     border-radius: 5px;
     background: #fff;
     left: 0;
+}
+.bufferedLine{
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    position: absolute;
 }
 .progress .line{
     height: 2px;

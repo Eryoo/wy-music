@@ -38,7 +38,7 @@ const router:Array<any> = [
         path: '/palyList',
         name:'palyList',
         meta:{
-            keep:false,
+            keep:true,
             nav:false
         },
          component: () =>  import("../views/playlistPages.vue")

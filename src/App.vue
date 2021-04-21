@@ -1,6 +1,8 @@
 <template>
    <div class="app">
-    <router-view></router-view>
+     
+      <router-view></router-view>
+    
     <!-- 底部导航 -->
     <bottomNav></bottomNav>
     <audio id="audio" controls="controls" ref='audio' style="displat:none" />
@@ -8,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent , watch ,ref ,provide , onMounted} from 'vue'
+import { defineComponent , watch ,ref ,provide , onMounted ,computed} from 'vue'
 import bottomNav from "./components/nav.vue"
 import { useRoute,useRouter } from 'vue-router'
 export default defineComponent({
@@ -19,6 +21,8 @@ export default defineComponent({
        const audio = document.getElementById('audio')
         provide('audio',audio)
     })
+    const Router = useRouter()
+    const Route = useRoute();
   }
 })
 </script>

@@ -1,5 +1,6 @@
 
 export const formatSecToDate = (s:number) => {
+    if(s == '')return
     let t:number;
         if (s > -1) {
             var hour = Math.floor(s / 3600);
@@ -24,6 +25,7 @@ export const formatSecToDate = (s:number) => {
 
 
 export const numberFormat =  (value :number):object =>{
+    
     var param = {
         value:0,
         unit:""

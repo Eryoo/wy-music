@@ -17,6 +17,9 @@
                 </div>
                 <div class="name">{{item.name}}</div>
             </div>
+            <!-- 补位 -->
+            <div class="playlists-item" v-for="(item,index) in (3-(playlists.list.length%3))" :key="index">
+            </div>
         </div>
     </div>
 </template>
