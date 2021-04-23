@@ -1,9 +1,11 @@
 <template>
     <div id="playContent">
+        <div class="songName">{{songs.name}}</div>
          <!-- 隐藏播放器 -->
         <audio id="audio" controls="controls" ref='audio'  style="displat:none" />
         <div class="bg">
             <img class="img" v-if="songs.picUrl != ''" :src="songs.picUrl" alt="">
+            <div class="playBg"></div>
         </div>
         <div class="plate" :class="{'play':selfPlayyStatus}">
             <img v-if="songs.picUrl != ''" :src="songs.picUrl" alt="">
@@ -35,7 +37,7 @@
     import { useStore , mapGetters} from "vuex"
     import {getSongDetail ,getSongUrl} from "../api/login"
     import {formatSecToDate} from "../utils/utils"
-    
+    import { playHandle } from "../components/audio"
 
     const Router = useRouter()
     const Route = useRoute()
@@ -49,7 +51,8 @@
     const audio:any = inject("audio")
     const songs = reactive({
         details:{},
-        picUrl:""
+        picUrl:"",
+        name:""
        
     })
     let timer:any = null
@@ -71,6 +74,7 @@
     function getSongDetails (){
            getSongDetail(`/song/detail?ids=${Route.query.songid}`,{}).then(res =>{
             if(res.data.code == 200){
+                songs.name  = res.data.songs[0].name
                 songs.picUrl = res.data.songs[0].al.picUrl
                 store.commit('play/setSongInfo',res.data.songs[0])
                     getSongUrls(Route.query.songid)
@@ -80,6 +84,7 @@
  
     function getSongUrls (id) {
         getSongUrl(`/song/url?id=${id}`,{}).then(res =>{
+            
             if(res.data.code == 200) {
                 audio.src = res.data.data[0].url
             }
@@ -92,12 +97,12 @@
         audio.pause()
     }
 
-    function playHandle() {
+    // function playHandle() {
         
-        audio.play()
-        store.commit('play/setPlayStatus',true)
-        pointLeftLoop()
-    }
+    //     audio.play()
+    //     store.commit('play/setPlayStatus',true)
+    //     pointLeftLoop()
+    // }
 
     function pointLeftLoop(){
         clearInterval(timer)
@@ -120,10 +125,12 @@
     onMounted(() =>{
             
          line = document.getElementById("line")
-            if(!selfPlayyStatus || (songPlayId != Route.query.songid && selfPlayyStatus) ){
+            
+            if(!selfPlayyStatus.value || (songPlayId != Route.query.songid && selfPlayyStatus) ){
                 getSongDetails()
             }else{
                 songs.picUrl = songInfo.al.picUrl
+                songs.name = songInfo.name
                 pointLeftLoop()
                 currentTime.value = store.getters["play/getPlayTimeOut"];
                 duration.value = audio.duration;  
@@ -135,7 +142,8 @@
             
             audio.addEventListener("canplay", function(){//监听audio是否加载完毕，如果加载完毕
                  duration.value = audio.duration  
-                 playHandle()           
+                 playHandle()      
+                 pointLeftLoop()     
                  store.commit("play/setSongUrl","")
                  store.commit("play/setSongId",Route.query.songid)
             });            
@@ -172,11 +180,22 @@
 </script>
 
 <style scoped lang="scss">
-.playContent{
+#playContent{
     overflow: hidden;
     position: relative;
     width: 100vw;
     height: 100vh;
+    .songName{
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 50px;
+        font-size: 24px;
+        text-align: center;
+        padding: 5px 0;
+    }
     
 }
     .bg{
@@ -187,9 +206,20 @@
         width: 100vw;
         height: 100vh;
         overflow: hidden;
-        background: rgba(0, 0, 0, .4); 
+        
+        .playBg{
+            background: rgba(0, 0, 0, .2); 
+             z-index: 3;
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
         .img{
             height: 100%;
+            position: relative;
+            z-index: 2;
         }
     }
 

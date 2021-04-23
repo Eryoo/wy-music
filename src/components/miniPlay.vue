@@ -33,12 +33,11 @@ const playStatus = computed(()=>{
 })
 const Router = useRouter()
 
-console.log(songInfo)
 function goToPlay (){
     Router.push({
         path:'/play',
         query:{
-            songid:songInfo.id
+            songid:songInfo.value.id
         }
     })
 }
