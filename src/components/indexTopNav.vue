@@ -30,32 +30,33 @@ const boll = reactive({
         }
     }
 </script>
-<style scoped>
+<style scoped lang='scss'>
 .indexTopNav{
     display: flex;
     overflow: hidden;
     overflow-x: auto;
     margin-top: 15px;
     margin-bottom: 20px;
-}
-.items{
-    margin-right: 12px;
-}
-.bg{
-    width: 45px;
-    height: 45px;
-    border-radius: 25px;
-    background: red;
-    margin: 0 auto;
-}
-.bg img{
-    width: 100%;
-    height: 100%;
-}
-.name{
-    font-size:12px;
-    text-align: center;
-    width: 55px;
-
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    padding: 0 10px 10px;
+    .items{
+        margin-right: 12px;
+        .bg{
+            width: 45px;
+            height: 45px;
+            border-radius: 25px;
+            background: red;
+            margin: 0 auto;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .name{
+            font-size:12px;
+            text-align: center;
+            width: 55px;
+        }
+    }
 }
 </style>

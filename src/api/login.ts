@@ -59,3 +59,6 @@ export const personalizedMv = (url:string,params:object) =>{
     return GET(url,params)
 }
 
+export const videoTimelineAll = (url:string,params:object) => {
+    return GET(url,params)
+}

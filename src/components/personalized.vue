@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <div class="title">推荐歌单</div>
+    <div class="personalized">
+        <div class="title">
+            <div>推荐歌单</div>
+            <div class="more">更多></div>
+        </div>
         <div class="content">
             <div class="items" v-for="(item) in obj.list" :key="item.id" @click="goToDetails(item.id)">
                 <img :src="item.picUrl" alt="">
@@ -44,11 +47,26 @@
     })
 
 </script>
-<style scoped>
+<style scoped lang='scss'>
+.personalized{
+    padding-left: 10px;
+}
 .title{
     font-size: 18px;
     margin-bottom: 10px;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    justify-content: space-between;
+    .more{
+        font-size: 14px;
+        font-weight:normal;
+        border: 1px solid #999;
+        padding:  0 5px;
+        border-radius: 10px;
+        color: #999;
+    }
 }
 .content{
     overflow: hidden;

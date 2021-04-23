@@ -7,9 +7,11 @@
             <indexTopNav></indexTopNav>
             <!-- 推荐歌单 -->
             <personalized></personalized>
-            
-            <nimiPlay></nimiPlay>
         </div>
+         <div class="section" :style="{'font-size':'14px'}">
+             暂无数据
+         </div>
+        <nimiPlay></nimiPlay>
     </div>
 </template>
 <script lang="ts" setup>
@@ -19,27 +21,23 @@ import indexBanner from "../components/indexBanner.vue"
 import indexTopNav from "../components/indexTopNav.vue"   
 import nimiPlay from "../components/miniPlay.vue"
 
-import {homepageBlockPage,playlistCatlist,personalizedMv} from "../api/login"
+import {homepageBlockPage} from "../api/login"
 
 import {ref , inject} from "vue"
 
-// playlistCatlist("/playlist/catlist",{}).then(res =>{
-  
-// })
-
-
-personalizedMv('/personalized/mv',{}).then(res =>{
-  console.log(res)
-})
-
-
-// homepageBlockPage("/homepage/block/page",{}).then(res =>{
-//     // console.log(res)
-// })
 
 </script>
 <style scoped>
 .section{
-    padding: 15px 10px;
+    padding: 15px 0px;
+    background: #fff;
+    margin-bottom: 10px; 
+    border-radius: 10px;
 }
+.section:first-child{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+       border-bottom-left-radius: 10px;
+       border-bottom-right-radius: 10px;
+    }
 </style>

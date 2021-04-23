@@ -33,4 +33,7 @@ export default defineComponent({
      left: -20000px;
      position: absolute;
    }
+   body{
+     background: #e1e1e1;
+   }
 </style>

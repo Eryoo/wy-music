@@ -70,11 +70,19 @@ playlistDetail("/playlist/detail",{
 }).then(res =>{
     console.log(res)
     if(res.data.code == 200){
+        let arr = []
+        res.data.playlist.tracks.forEach((element,i) => {
+            res.data.privileges.forEach(el => {
+                if(element.id == el.id){
+                    arr[i] = {...element,...el}
+                }
+            });
+        });
         details.playlist = res.data.playlist
         avatarUrl.value = res.data.playlist.creator.avatarUrl
         identityIconUrl.value = res.data.playlist.creator.avatarDetail?res.data.playlist.creator.avatarDetail.identityIconUrl:""
         nickname.value = res.data.playlist.creator.nickname
-        tracks.list = res.data.playlist.tracks
+        tracks.list = arr
         shareCount.value =  res.data.playlist.shareCount
         trackCount.value = res.data.playlist.trackCount
         commentCount.value = res.data.playlist.commentCount
@@ -91,6 +99,7 @@ playlistDetail("/playlist/detail",{
     }
     .playListDetails{
         width: 100%;
+        background: #fff;
     }
     .top-details{
         /* height: 180px; */
