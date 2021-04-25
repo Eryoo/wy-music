@@ -1,4 +1,6 @@
 <template>
+
+
     <div id="playContent">
         <div class="songName">{{songs.name}}</div>
          <!-- 隐藏播放器 -->
@@ -30,9 +32,10 @@
         </div>
        
     </div>
+    
 </template>
 <script lang="ts" setup>
-    import { defineProps , onMounted ,ref ,reactive ,onUnmounted,computed,inject } from "vue"
+    import { defineProps , onMounted ,ref ,reactive ,onUnmounted,computed,inject,watch } from "vue"
     import { useRoute,useRouter } from "vue-router"
     import { useStore , mapGetters} from "vuex"
     import {getSongDetail ,getSongUrl} from "../api/login"
@@ -65,6 +68,8 @@
     let timeOut =  computed(() => {
             return  formatSecToDate(((duration.value - currentTime.value)))
         })
+
+    const transitionName = ref('fold-left')
     const selfPlayyStatus = computed(()=>{
         return store.getters['play/getPlayStatus']
     })
@@ -126,9 +131,11 @@
             
          line = document.getElementById("line")
             
-            if(!selfPlayyStatus.value || (songPlayId != Route.query.songid && selfPlayyStatus) ){
+            if(!selfPlayyStatus.value || (songPlayId != Route.query.songid && selfPlayyStatus.value) ){
+                console.log(1)
                 getSongDetails()
             }else{
+                console.log(2)
                 songs.picUrl = songInfo.al.picUrl
                 songs.name = songInfo.name
                 pointLeftLoop()
@@ -176,6 +183,9 @@
           clearInterval(playStatus)
           clearInterval(timer)
     })
+
+    
+
 
 </script>
 
